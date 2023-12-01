@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="{{ hnjurl_for('static', filename='script.js') }}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        table {
+            width: 870;
+            height: 420;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #6bbcef;
+            color: white;
+        }
+
+        td {
+            background-color: #fff;
+            cursor: pointer;
+            
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 5px
+        }
+
+        a:hover {
+            font-weight: bold;
+        }
+
+        .empty-cell {
+            background-color: #ddd;
+        }
+
+        .navigation {
+            display: inline-block;
+            margin: 2px;
+            padding: 1px;
+            background-color: #71dfe6;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calendar</h1>
+    <p>年: {{ y1 }} 月: {{ m1 }}</p>
+
+    <a href="{{ url_for('prev_month') }}" class="navigation">前の月</a>
+    <a href="{{ url_for('next_month') }}" class="navigation">次の月</a>
+
+    <table border="1">
+        <tr>
+            <th>日</th>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th>土</th>
+        </tr>
+        {% for i in range(6) %}
+        <tr>
+            {% for j in range(7) %}
+            <td class="{% if not cal[j + 7*i] %}empty-cell{% endif %}">
+                {% if cal[j + 7*i] %}
+                    <a href="#" onclick="showDiary('{{ cal[j + 7*i] }}')">{{ cal[j + 7*i] }}</a>
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
